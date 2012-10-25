@@ -15,11 +15,10 @@
  */
 package mx.com.leviathan.game.tge.test.action;
 
-import java.util.Iterator;
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.action.ParamHolder;
-import mx.com.leviathan.game.tge.item.Item;
 import mx.com.leviathan.game.tge.pattern.PatternAction;
+import mx.com.leviathan.game.tge.player.Inventory;
 import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.world.World;
 
@@ -27,21 +26,17 @@ import mx.com.leviathan.game.tge.world.World;
  *
  * @author Leviathan
  */
-@PatternAction(verb = "Tomar", param = {"item_name"}, regex = {"^[\\w]+$"})
-public class PickAction implements Action {
-
+@PatternAction(verb = "Dejar", param = {"item_name"}, regex = {"^[\\w]+$"})
+public class DropAction implements Action {
+    
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
-        Iterator<Item> iterator = world.getCurrentScene().getItems().iterator();
-        while (iterator.hasNext()) {
-            Item item = iterator.next();
-            if (item.getName().equals(holder.get("item_name"))) {
-                Player.getInstance().getInventory().addItem(item);
-                iterator.remove();
-                System.out.println("Tomaste el item " + holder.get("item_name"));
-                return true;
-            }
+        Inventory inventory = Player.getInstance().getInventory();
+        String itemName = holder.get("item_name", String.class);
+        if (inventory.contains(itemName)) {
+            world.getCurrentScene().addItem(inventory.getItem(itemName));
+            inventory.removeItem(inventory.getItem(itemName));
         }
-        return false;
+        return true;
     }
 }

@@ -30,72 +30,73 @@ import mx.com.leviathan.game.tge.world.scene.connector.Connector;
  * @author Leviathan
  */
 public class World {
-    
+
     private List<Action> actions = new ArrayList<Action>();
     private List<Scene> scenes = new ArrayList<Scene>();
     private List<Connector> connectors = new ArrayList<Connector>();
     private List<Scene> routes = new ArrayList<Scene>();
     private Scene currentScene;
-    
+
     public Scene getCurrentScene() {
         return currentScene;
     }
-    
+
     public void setCurrentScene(String name) {
         Scene sceneFor = sceneFor(name);
         if (sceneFor != null) {
             currentScene = sceneFor;
         }
     }
-    
+
     public List<Action> getActions() {
         return actions;
     }
-    
+
     public void addAction(Action action) {
         actions.add(action);
     }
-    
+
     public void removeAction(Action action) {
         actions.remove(action);
     }
-    
+
     public List<Scene> getScenes() {
         return scenes;
     }
-    
+
     public void addScene(Scene scene) {
         scenes.add(scene);
     }
-    
+
     public void removeScene(Scene scene) {
         scenes.remove(scene);
     }
-    
+
     public List<Connector> getConnectors() {
         return connectors;
     }
-    
+
     public void addConnector(Connector connector) {
         connectors.add(connector);
     }
-    
+
     public void removeConnector(Connector connector) {
         connectors.remove(connector);
     }
-    
+
     public boolean previous() {
         if (!routes.isEmpty()) {
             currentScene = routes.remove(routes.size() - 1);
+            return true;
         }
         return false;
     }
-    
+
     public boolean goTo(String scene) {
         for (Connector connector : connectors) {
-            if (connector.getSource().getName().equals(currentScene.getName())) {
-                if (connector.getTarget().getName().equals(scene)) {
-                    routes.add(currentScene);
+            if (connector.getSource().getName().equalsIgnoreCase(currentScene.getName())) {
+                if (connector.getTarget().getName().equalsIgnoreCase(scene)) {
+                    routes.add(connector.getSource());
                     currentScene = connector.getTarget();
                     return true;
                 }
@@ -103,7 +104,7 @@ public class World {
         }
         return false;
     }
-    
+
     public Scene sceneFor(String scene) {
         for (Scene s : scenes) {
             if (s.getName().equalsIgnoreCase(scene)) {
@@ -112,7 +113,7 @@ public class World {
         }
         return null;
     }
-    
+
     public Action actionFor(String action) {
         for (Action a : actions) {
             if (a.getClass().isAnnotationPresent(PatternAction.class)) {
@@ -124,7 +125,7 @@ public class World {
         }
         return null;
     }
-    
+
     public boolean execute(String action) {
         Action actionFor = actionFor(action);
         if (actionFor != null) {
