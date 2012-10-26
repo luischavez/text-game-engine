@@ -26,9 +26,11 @@ import mx.com.leviathan.game.tge.world.scene.Scene;
  */
 public interface WorldListener {
 
-    //public void onChange(World world);
-
     public void onScene(World world, Scene scene);
 
     public void onAction(World world, Action action, String verb, ParamHolder holder);
+
+    public void onBeforeAction(World world, Action action, String verb, ParamHolder holder);
+
+    public void onAfterAction(World world, Action action, String verb, ParamHolder holder, boolean executed);
 }

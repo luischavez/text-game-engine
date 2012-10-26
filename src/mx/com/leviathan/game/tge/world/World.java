@@ -107,13 +107,21 @@ public class World {
             String verb = Parser.getVerb(action);
             PatternAction patternAction = actionFor.getClass().getAnnotation(PatternAction.class);
             ParamHolder holder = Parser.parse(patternAction, action);
-            if (actionFor.doAction(this, verb, holder)) {
+            for (WorldListener worldListener : worldListeners) {
+                worldListener.onBeforeAction(this, actionFor, verb, holder);
+            }
+            boolean executed = actionFor.doAction(this, verb, holder);
+            if (executed) {
                 currentScene.doAction(this, verb, holder);
                 for (WorldListener worldListener : worldListeners) {
                     worldListener.onAction(this, actionFor, verb, holder);
                 }
-                return true;
             }
+            for (WorldListener worldListener : worldListeners) {
+                worldListener.onAfterAction(this, actionFor, verb, holder, executed);
+
+            }
+            return true;
         }
         return false;
     }
