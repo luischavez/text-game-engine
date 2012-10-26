@@ -17,15 +17,17 @@ package mx.com.leviathan.game.tge.test;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.Scanner;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import mx.com.leviathan.game.tge.action.Action;
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.event.WorldListener;
 import mx.com.leviathan.game.tge.io.receiver.SwingReceiver;
 import mx.com.leviathan.game.tge.io.sender.SwingSender;
 import mx.com.leviathan.game.tge.param.ParamHolder;
+import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.test.action.DropAction;
 import mx.com.leviathan.game.tge.test.action.ExampleAction;
 import mx.com.leviathan.game.tge.test.action.ExitAction;
@@ -34,6 +36,7 @@ import mx.com.leviathan.game.tge.test.action.GoToAction;
 import mx.com.leviathan.game.tge.test.action.HelpAction;
 import mx.com.leviathan.game.tge.test.action.ItemAction;
 import mx.com.leviathan.game.tge.test.action.PickAction;
+import mx.com.leviathan.game.tge.test.action.RoutesAction;
 import mx.com.leviathan.game.tge.test.world.scene.CleanRoomScene;
 import mx.com.leviathan.game.tge.test.world.scene.RoomScene;
 import mx.com.leviathan.game.tge.world.World;
@@ -45,65 +48,85 @@ import mx.com.leviathan.game.tge.world.scene.connector.Connector;
  * @author Leviathan
  */
 public class Test {
-    
-    public static void main(String... args) {
-        JFrame frame = new JFrame("TEST");
+
+    /*
+     * Swing Components
+     */
+    private JFrame frame = new JFrame("TEST");
+    private JTextField inputField = new JTextField();
+    private JTextArea outputArea = new JTextArea();
+    private JScrollPane scrollPane = new JScrollPane(outputArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+    /*
+     * Engine
+     */
+    World world = new World();
+
+    public Test() {
+        initComponents();
+        initEngine();
+        while (true) {
+            Context.getInstance().getSender().send("Ingresa una accion >> ");
+            String action = Context.getInstance().getReceiver().read(String.class);
+            Context.getInstance().getSender().clear();
+
+            world.execute(action);
+        }
+    }
+
+    private void initComponents() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridLayout(2, 1));
-        JTextField inputField = new JTextField();
-        JTextArea outputArea = new JTextArea();
         outputArea.setBackground(Color.BLACK);
         outputArea.setForeground(Color.WHITE);
-        outputArea.setEnabled(false);
+        outputArea.setEditable(false);
+
         frame.add(inputField);
-        frame.add(outputArea);
-        SwingSender swingSender = new SwingSender(outputArea, true);
-        SwingReceiver swingReceiver = new SwingReceiver(inputField);
+        frame.add(scrollPane);
         frame.setSize(400, 400);
         frame.setResizable(false);
         frame.setVisible(true);
-        swingSender.send("Ingresa algo");
-        swingSender.send(swingReceiver.read(String.class));
-        Scanner scanner = new Scanner(System.in);
-        
-        World world = new World();
-        
+    }
+
+    private void initEngine() {
+        Context.getInstance().setPlayer(new Player());
+        Context.getInstance().setReceiver(new SwingReceiver(inputField));
+        Context.getInstance().setSender(new SwingSender(outputArea, true));
+
         world.addWorldListener(new WorldListener() {
             @Override
             public void onScene(World world, Scene scene) {
-                System.out.println("Se cambio la escena a: " + scene.getName());
+                Context.getInstance().getSender().send("Se cambio la escena a: " + scene.getName() + "\n");
             }
-            
+
             @Override
             public void onAction(World world, Action action, String verb, ParamHolder holder) {
-                System.out.println("Se ejecuto la accion: " + verb);
+                Context.getInstance().getSender().send("Se ejecuto la accion: " + verb + "\n");
             }
         });
-        
+
         world.addAction(new ExampleAction());
         world.addAction(new PickAction());
         world.addAction(new HelpAction());
         world.addAction(new GoBackAction());
         world.addAction(new GoToAction());
+        world.addAction(new RoutesAction());
         world.addAction(new DropAction());
         world.addAction(new ItemAction());
         world.addAction(new ExitAction());
-        
+
         RoomScene roomScene = new RoomScene();
         CleanRoomScene cleanRoomScene = new CleanRoomScene();
-        
+
         world.addScene(roomScene);
         world.addScene(cleanRoomScene);
-        
+
         world.addConnector(new Connector(roomScene, cleanRoomScene));
-        
+
         world.setCurrentScene("Cuarto");
-        
-        while (true) {
-            System.out.print("Ingresa una accion >> ");
-            String action = scanner.nextLine();
-            
-            world.execute(action);
-        }
+    }
+
+    public static void main(String... args) {
+        Test test = new Test();
     }
 }

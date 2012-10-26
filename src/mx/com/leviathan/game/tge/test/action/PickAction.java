@@ -18,9 +18,9 @@ package mx.com.leviathan.game.tge.test.action;
 import java.util.Iterator;
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.item.Item;
 import mx.com.leviathan.game.tge.param.ParamHolder;
-import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.world.World;
 
 /**
@@ -36,9 +36,9 @@ public class PickAction implements Action {
         while (iterator.hasNext()) {
             Item item = iterator.next();
             if (item.getName().equals(holder.get("item_name"))) {
-                Player.getInstance().getInventory().addItem(item);
+                Context.getInstance().getPlayer().getInventory().addItem(item);
                 iterator.remove();
-                System.out.println("Tomaste el item " + holder.get("item_name"));
+                Context.getInstance().getSender().send("Tomaste el item " + holder.get("item_name") + "\n");
                 return true;
             }
         }

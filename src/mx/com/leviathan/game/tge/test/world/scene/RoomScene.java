@@ -15,6 +15,7 @@
  */
 package mx.com.leviathan.game.tge.test.world.scene;
 
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.test.item.KeyItem;
 import mx.com.leviathan.game.tge.world.World;
@@ -34,7 +35,7 @@ public class RoomScene extends Scene {
     @Override
     public void doAction(World world, String verb, ParamHolder holder) {
         if (verb.equals("TOMAR")) {
-            System.out.println("Se tomo de: " + getName());
+            Context.getInstance().getSender().send("Se tomo de: " + getName() + "\n");
         }
     }
 }

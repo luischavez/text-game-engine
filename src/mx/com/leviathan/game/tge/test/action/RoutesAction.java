@@ -15,27 +15,28 @@
  */
 package mx.com.leviathan.game.tge.test.action;
 
+import java.util.List;
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.annotation.PatternAction;
 import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.param.ParamHolder;
-import mx.com.leviathan.game.tge.player.Inventory;
 import mx.com.leviathan.game.tge.world.World;
+import mx.com.leviathan.game.tge.world.scene.connector.Connector;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "DEJAR", param = {"item_name"}, regex = {"^[\\w]+$"})
-public class DropAction implements Action {
+@PatternAction(verb = "IR", param = {}, regex = {})
+public class RoutesAction implements Action {
 
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
-        Inventory inventory = Context.getInstance().getPlayer().getInventory();
-        String itemName = holder.get("item_name", String.class);
-        if (inventory.contains(itemName)) {
-            world.getCurrentScene().addItem(inventory.getItem(itemName));
-            inventory.removeItem(inventory.getItem(itemName));
+        List<Connector> connectors = world.getConnectors();
+        for (Connector connector : connectors) {
+            if (connector.getSource().equals(world.getCurrentScene())) {
+                Context.getInstance().getSender().send(connector.getTarget().getName().replaceAll(" ", "_") + "\n");
+            }
         }
         return true;
     }

@@ -17,6 +17,7 @@ package mx.com.leviathan.game.tge.test.action;
 
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
@@ -29,7 +30,7 @@ public class ExampleAction implements Action {
 
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
-        System.out.println(holder.get("name") + " " + holder.get("last_name"));
+        Context.getInstance().getSender().send(holder.get("name") + " " + holder.get("last_name") + "\n");
         return true;
     }
 }

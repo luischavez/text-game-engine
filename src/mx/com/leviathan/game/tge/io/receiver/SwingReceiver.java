@@ -26,9 +26,9 @@ import javax.swing.text.JTextComponent;
  * @author Leviathan
  */
 public class SwingReceiver implements Receiver {
-
+    
     private JTextComponent component;
-
+    
     public SwingReceiver(JTextComponent component) {
         this.component = component;
         this.component.addKeyListener(new KeyAdapter() {
@@ -42,7 +42,7 @@ public class SwingReceiver implements Receiver {
             }
         });
     }
-
+    
     @Override
     public Object read() {
         try {
@@ -52,9 +52,11 @@ public class SwingReceiver implements Receiver {
         } catch (InterruptedException ex) {
             Logger.getLogger(SwingReceiver.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return component.getText();
+        String text = component.getText();
+        component.setText("");
+        return text;
     }
-
+    
     @Override
     public <T> T read(Class<T> type) {
         return (T) read();

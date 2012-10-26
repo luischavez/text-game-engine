@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.io;
-
-import java.util.Scanner;
-import mx.com.leviathan.game.tge.io.receiver.Receiver;
-import mx.com.leviathan.game.tge.io.sender.Sender;
+package mx.com.leviathan.game.tge.io.sender;
 
 /**
  *
  * @author Leviathan
  */
-public class SystemIO implements Sender, Receiver {
-
-    private Scanner scanner = new Scanner(System.in);
+public class SystemSender implements Sender {
 
     @Override
     public void send(Object object) {
@@ -33,12 +27,7 @@ public class SystemIO implements Sender, Receiver {
     }
 
     @Override
-    public Object read() {
-        return scanner.nextLine();
-    }
-
-    @Override
-    public <T> T read(Class<T> type) {
-        return (T) read();
+    public void clear() {
+        System.out.flush();
     }
 }

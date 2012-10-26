@@ -15,8 +15,8 @@
  */
 package mx.com.leviathan.game.tge.test.item;
 
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.item.Item;
-import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.player.Registry;
 import mx.com.leviathan.game.tge.world.World;
 
@@ -25,19 +25,19 @@ import mx.com.leviathan.game.tge.world.World;
  * @author Leviathan
  */
 public class KeyItem extends Item {
-    
+
     public KeyItem() {
         setName("llave");
     }
-    
+
     @Override
     public void on(World world, String action) {
-        Registry registry = Player.getInstance().getRegistry();
+        Registry registry = Context.getInstance().getPlayer().getRegistry();
         if (action.equalsIgnoreCase("limpiar")) {
             if (registry.status("KEY_limpiar")) {
-                System.out.println("la llave ya estaba limpia");
+                Context.getInstance().getSender().send("la llave ya estaba limpia\n");
             } else {
-                System.out.println("se limpio la llave");
+                Context.getInstance().getSender().send("se limpio la llave\n");
                 registry.setFlag("KEY_limpiar", true);
             }
         }

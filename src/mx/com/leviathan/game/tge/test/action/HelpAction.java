@@ -18,6 +18,7 @@ package mx.com.leviathan.game.tge.test.action;
 import java.util.List;
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.context.Context;
 import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
@@ -34,9 +35,9 @@ public class HelpAction implements Action {
         for (Action action : actions) {
             if (action.getClass().isAnnotationPresent(PatternAction.class)) {
                 PatternAction patternAction = action.getClass().getAnnotation(PatternAction.class);
-                System.out.println(patternAction.verb());
+                Context.getInstance().getSender().send(patternAction.verb() + "\n");
                 for (String param : patternAction.param()) {
-                    System.out.println("\t-" + param);
+                    Context.getInstance().getSender().send("\t-" + param + "\n");
                 }
             }
         }

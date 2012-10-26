@@ -13,15 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.io.sender;
+package mx.com.leviathan.game.tge.io.receiver;
+
+import java.util.Scanner;
 
 /**
  *
  * @author Leviathan
  */
-public interface Sender {
+public class SystemReceiver implements Receiver {
 
-    public void send(Object object);
-    
-    public void clear();
+    private Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public Object read() {
+        return scanner.nextLine();
+    }
+
+    @Override
+    public <T> T read(Class<T> type) {
+        return (T) read();
+    }
 }

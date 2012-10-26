@@ -24,7 +24,7 @@ public class Player {
     private Inventory inventory = new Inventory();
     private Registry registry = new Registry();
 
-    private Player() {
+    public Player() {
     }
 
     public Inventory getInventory() {
@@ -33,14 +33,5 @@ public class Player {
 
     public Registry getRegistry() {
         return registry;
-    }
-
-    public static Player getInstance() {
-        return PlayerrHolder.INSTANCE;
-    }
-
-    private static class PlayerrHolder {
-
-        private static final Player INSTANCE = new Player();
     }
 }

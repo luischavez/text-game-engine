@@ -38,5 +38,11 @@ public class SwingSender implements Sender {
         } else {
             component.setText(object.toString());
         }
+        component.setCaretPosition(component.getDocument().getLength());
+    }
+
+    @Override
+    public void clear() {
+        component.setText("");
     }
 }
