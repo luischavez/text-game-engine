@@ -16,8 +16,8 @@
 package mx.com.leviathan.game.tge.test.action;
 
 import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.action.ParamHolder;
-import mx.com.leviathan.game.tge.pattern.PatternAction;
+import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.player.Inventory;
 import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.world.World;
@@ -26,9 +26,9 @@ import mx.com.leviathan.game.tge.world.World;
  *
  * @author Leviathan
  */
-@PatternAction(verb = "Dejar", param = {"item_name"}, regex = {"^[\\w]+$"})
+@PatternAction(verb = "DEJAR", param = {"item_name"}, regex = {"^[\\w]+$"})
 public class DropAction implements Action {
-    
+
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
         Inventory inventory = Player.getInstance().getInventory();

@@ -13,36 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.action;
-
-import java.util.HashMap;
-import java.util.Map;
+package mx.com.leviathan.game.tge.io.sender;
 
 /**
  *
  * @author Leviathan
  */
-public class ParamHolder {
+public interface Sender {
 
-    private Map<String, Object> params = new HashMap<String, Object>();
-
-    public void add(String key, Object value) {
-        params.put(key, value);
-    }
-
-    public Object get(String key) {
-        return params.get(key);
-    }
-
-    public <T> T get(String key, Class<T> type) {
-        return (T) get(key);
-    }
-
-    public boolean exist(String key) {
-        return params.containsKey(key);
-    }
-
-    public int size() {
-        return params.size();
-    }
+    public void send(Object object);
 }

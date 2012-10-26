@@ -15,6 +15,7 @@
  */
 package mx.com.leviathan.game.tge.action;
 
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
 /**

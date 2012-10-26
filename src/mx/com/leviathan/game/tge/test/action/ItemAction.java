@@ -18,17 +18,25 @@ package mx.com.leviathan.game.tge.test.action;
 import mx.com.leviathan.game.tge.action.Action;
 import mx.com.leviathan.game.tge.annotation.PatternAction;
 import mx.com.leviathan.game.tge.param.ParamHolder;
+import mx.com.leviathan.game.tge.player.Inventory;
+import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.world.World;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "IR", param = {"scene_name"}, regex = {"^[\\w\\s]+$"})
-public class GoToAction implements Action {
+@PatternAction(verb = "ITEM", param = {"item_name", "action"}, regex = {"^[\\w_]+$", "^[\\w]+$"})
+public class ItemAction implements Action {
 
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
-        return world.goTo(holder.get("scene_name", String.class));
+        Inventory inventory = Player.getInstance().getInventory();
+        String itemName = holder.get("item_name", String.class);
+        if (inventory.contains(itemName)) {
+            inventory.getItem(itemName).on(world, holder.get("action", String.class));
+            return true;
+        }
+        return false;
     }
 }

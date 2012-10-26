@@ -17,8 +17,8 @@ package mx.com.leviathan.game.tge.world.scene;
 
 import java.util.ArrayList;
 import java.util.List;
-import mx.com.leviathan.game.tge.action.ParamHolder;
 import mx.com.leviathan.game.tge.item.Item;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
 /**

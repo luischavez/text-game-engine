@@ -13,24 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.pattern;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package mx.com.leviathan.game.tge.io.receiver;
 
 /**
  *
  * @author Leviathan
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PatternAction {
+public interface Receiver {
 
-    String verb();
+    public Object read();
 
-    String[] param();
-
-    String[] regex();
+    public <T> T read(Class<T> type);
 }

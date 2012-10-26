@@ -17,15 +17,15 @@ package mx.com.leviathan.game.tge.test.action;
 
 import java.util.List;
 import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.action.ParamHolder;
-import mx.com.leviathan.game.tge.pattern.PatternAction;
+import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "Ayuda", param = {}, regex = {})
+@PatternAction(verb = "AYUDA", param = {}, regex = {})
 public class HelpAction implements Action {
 
     @Override

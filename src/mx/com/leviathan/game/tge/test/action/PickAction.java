@@ -17,9 +17,9 @@ package mx.com.leviathan.game.tge.test.action;
 
 import java.util.Iterator;
 import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.action.ParamHolder;
+import mx.com.leviathan.game.tge.annotation.PatternAction;
 import mx.com.leviathan.game.tge.item.Item;
-import mx.com.leviathan.game.tge.pattern.PatternAction;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.player.Player;
 import mx.com.leviathan.game.tge.world.World;
 
@@ -27,7 +27,7 @@ import mx.com.leviathan.game.tge.world.World;
  *
  * @author Leviathan
  */
-@PatternAction(verb = "Tomar", param = {"item_name"}, regex = {"^[\\w]+$"})
+@PatternAction(verb = "TOMAR", param = {"item_name"}, regex = {"^[\\w]+$"})
 public class PickAction implements Action {
 
     @Override

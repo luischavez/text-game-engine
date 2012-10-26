@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.test.action;
+package mx.com.leviathan.game.tge.annotation;
 
-import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.annotation.PatternAction;
-import mx.com.leviathan.game.tge.param.ParamHolder;
-import mx.com.leviathan.game.tge.world.World;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "IR", param = {"scene_name"}, regex = {"^[\\w\\s]+$"})
-public class GoToAction implements Action {
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PatternAction {
 
-    @Override
-    public boolean doAction(World world, String verb, ParamHolder holder) {
-        return world.goTo(holder.get("scene_name", String.class));
-    }
+    String verb();
+
+    String[] param();
+
+    String[] regex();
 }

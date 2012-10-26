@@ -15,7 +15,7 @@
  */
 package mx.com.leviathan.game.tge.test.world.scene;
 
-import mx.com.leviathan.game.tge.action.ParamHolder;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 import mx.com.leviathan.game.tge.world.scene.Scene;
 

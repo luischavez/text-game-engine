@@ -13,22 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.test.action;
+package mx.com.leviathan.game.tge.io;
 
-import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.annotation.PatternAction;
-import mx.com.leviathan.game.tge.param.ParamHolder;
-import mx.com.leviathan.game.tge.world.World;
+import java.util.Scanner;
+import mx.com.leviathan.game.tge.io.receiver.Receiver;
+import mx.com.leviathan.game.tge.io.sender.Sender;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "IR", param = {"scene_name"}, regex = {"^[\\w\\s]+$"})
-public class GoToAction implements Action {
+public class SystemIO implements Sender, Receiver {
+
+    private Scanner scanner = new Scanner(System.in);
 
     @Override
-    public boolean doAction(World world, String verb, ParamHolder holder) {
-        return world.goTo(holder.get("scene_name", String.class));
+    public void send(Object object) {
+        System.out.print(object);
+    }
+
+    @Override
+    public Object read() {
+        return scanner.nextLine();
+    }
+
+    @Override
+    public <T> T read(Class<T> type) {
+        return (T) read();
     }
 }

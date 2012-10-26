@@ -16,17 +16,17 @@
 package mx.com.leviathan.game.tge.test.action;
 
 import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.action.ParamHolder;
-import mx.com.leviathan.game.tge.pattern.PatternAction;
+import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.world.World;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "Salir", param = {}, regex = {})
+@PatternAction(verb = "SALIR", param = {}, regex = {})
 public class ExitAction implements Action {
-    
+
     @Override
     public boolean doAction(World world, String verb, ParamHolder holder) {
         System.exit(0);

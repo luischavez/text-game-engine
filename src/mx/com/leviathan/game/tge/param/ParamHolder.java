@@ -13,22 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.test.action;
+package mx.com.leviathan.game.tge.param;
 
-import mx.com.leviathan.game.tge.action.Action;
-import mx.com.leviathan.game.tge.annotation.PatternAction;
-import mx.com.leviathan.game.tge.param.ParamHolder;
-import mx.com.leviathan.game.tge.world.World;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Leviathan
  */
-@PatternAction(verb = "IR", param = {"scene_name"}, regex = {"^[\\w\\s]+$"})
-public class GoToAction implements Action {
+public class ParamHolder {
 
-    @Override
-    public boolean doAction(World world, String verb, ParamHolder holder) {
-        return world.goTo(holder.get("scene_name", String.class));
+    private Map<String, Object> params = new HashMap<String, Object>();
+
+    public void add(String key, Object value) {
+        params.put(key, value);
+    }
+
+    public Object get(String key) {
+        return params.get(key);
+    }
+
+    public <T> T get(String key, Class<T> type) {
+        return (T) get(key);
+    }
+
+    public boolean exist(String key) {
+        return params.containsKey(key);
+    }
+
+    public int size() {
+        return params.size();
     }
 }

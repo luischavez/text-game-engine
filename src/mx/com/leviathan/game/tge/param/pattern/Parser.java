@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.pattern;
+package mx.com.leviathan.game.tge.param.pattern;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import mx.com.leviathan.game.tge.action.ParamHolder;
+import mx.com.leviathan.game.tge.annotation.PatternAction;
+import mx.com.leviathan.game.tge.param.ParamHolder;
 
 /**
  *

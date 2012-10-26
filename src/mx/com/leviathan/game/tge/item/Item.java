@@ -33,5 +33,5 @@ public abstract class Item {
         this.name = name;
     }
 
-    public abstract void onUse(World world, String... actions);
+    public abstract void on(World world, String action);
 }
