@@ -47,6 +47,7 @@ public class World {
         if (scene != null) {
             if (scenes.contains(scene)) {
                 currentScene = scene;
+                currentScene.onScene(this);
                 for (WorldListener worldListener : worldListeners) {
                     worldListener.onScene(this, scene);
                 }
@@ -71,9 +72,11 @@ public class World {
         for (Connector connector : connectors) {
             if (connector.getSource().getName().equalsIgnoreCase(currentScene.getName())) {
                 if (connector.getTarget().getName().equalsIgnoreCase(scene)) {
-                    routes.add(currentScene);
-                    setCurrentScene(scene);
-                    return true;
+                    if (connector.isConnected()) {
+                        routes.add(currentScene);
+                        setCurrentScene(scene);
+                        return true;
+                    }
                 }
             }
         }
@@ -154,12 +157,34 @@ public class World {
         return connectors;
     }
 
+    public Connector getConnector(String from, String to) {
+        for (Connector connector : connectors) {
+            if (connector.getSource().getName().equalsIgnoreCase(from)) {
+                if (connector.getTarget().getName().equalsIgnoreCase(to)) {
+                    return connector;
+                }
+            }
+        }
+        return null;
+    }
+
     public void addConnector(Connector connector) {
         connectors.add(connector);
     }
 
     public void removeConnector(Connector connector) {
         connectors.remove(connector);
+    }
+
+    public boolean hasConnector(String from, String to) {
+        for (Connector connector : connectors) {
+            if (connector.getSource().getName().equalsIgnoreCase(from)) {
+                if (connector.getTarget().getName().equalsIgnoreCase(to)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void addWorldListener(WorldListener listener) {

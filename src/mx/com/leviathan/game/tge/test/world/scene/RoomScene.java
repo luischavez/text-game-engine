@@ -29,7 +29,11 @@ public class RoomScene extends Scene {
 
     public RoomScene() {
         setName("Cuarto");
-        addItem(new KeyItem());
+        addItem(new KeyItem(getName(), "Cuarto de limpiesa"));
+    }
+
+    @Override
+    public void onScene(World world) {
     }
 
     @Override

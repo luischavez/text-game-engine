@@ -26,7 +26,7 @@ import mx.com.leviathan.game.tge.world.World;
  *
  * @author Leviathan
  */
-@PatternAction(verb = "ITEM", param = {"item_name", "action"}, regex = {"^[\\w_]+$", "^[\\w]+$"})
+@PatternAction(verb = "ITEM", param = {"item_name", "action"}, regex = {"^[\\w\\s]+$", "^[\\w]+$"})
 public class ItemAction implements Action {
 
     @Override

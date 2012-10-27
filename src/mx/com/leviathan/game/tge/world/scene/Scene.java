@@ -26,29 +26,49 @@ import mx.com.leviathan.game.tge.world.World;
  * @author Leviathan
  */
 public abstract class Scene {
-    
+
     private String name;
     private List<Item> items = new ArrayList<Item>();
-    
+
     public String getName() {
         return name;
     }
-    
+
     protected void setName(String name) {
         this.name = name;
     }
-    
+
     public List<Item> getItems() {
         return items;
     }
-    
+
+    public Item getItem(String name) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public void addItem(Item item) {
         items.add(item);
     }
-    
+
     public void removeItem(Item item) {
         items.remove(item);
     }
-    
+
+    public boolean contains(String name) {
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public abstract void onScene(World world);
+
     public abstract void doAction(World world, String verb, ParamHolder holder);
 }

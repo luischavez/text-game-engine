@@ -16,9 +16,10 @@
 package mx.com.leviathan.game.tge.test.item;
 
 import mx.com.leviathan.game.tge.context.Context;
+import mx.com.leviathan.game.tge.context.Registry;
 import mx.com.leviathan.game.tge.item.Item;
-import mx.com.leviathan.game.tge.player.Registry;
 import mx.com.leviathan.game.tge.world.World;
+import mx.com.leviathan.game.tge.world.scene.connector.Connector;
 
 /**
  *
@@ -26,19 +27,39 @@ import mx.com.leviathan.game.tge.world.World;
  */
 public class KeyItem extends Item {
 
-    public KeyItem() {
-        setName("llave");
+    private String from, to;
+
+    public KeyItem(String from, String to) {
+        this.from = from;
+        this.to = to;
+        setName("llave " + to);
     }
 
     @Override
     public void on(World world, String action) {
-        Registry registry = Context.getInstance().getPlayer().getRegistry();
+        Registry registry = Registry.getInstance(this);
+        if (action.equalsIgnoreCase("usar")) {
+            if (registry.status("limpia")) {
+                if (world.getCurrentScene().getName().equals(from)) {
+                    if (world.hasConnector(from, to)) {
+                        Connector connector = world.getConnector(from, to);
+                        if (!connector.isConnected()) {
+                            connector.setConnected(true);
+                            Context.getInstance().getPlayer().getInventory().removeItem(this);
+                        }
+                    }
+                }
+            } else {
+                Context.getInstance().getSender().send("la llave esta muy sucia, no se puede usar\n");
+            }
+        }
+
         if (action.equalsIgnoreCase("limpiar")) {
-            if (registry.status("KEY_limpiar")) {
+            if (registry.status("limpia")) {
                 Context.getInstance().getSender().send("la llave ya estaba limpia\n");
             } else {
                 Context.getInstance().getSender().send("se limpio la llave\n");
-                registry.setFlag("KEY_limpiar", true);
+                registry.setFlag("limpia", true);
             }
         }
     }

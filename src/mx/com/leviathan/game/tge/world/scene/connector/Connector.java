@@ -24,10 +24,17 @@ import mx.com.leviathan.game.tge.world.scene.Scene;
 public class Connector {
 
     private Scene source, target;
+    private boolean connected = true;
 
     public Connector(Scene source, Scene target) {
         this.source = source;
         this.target = target;
+    }
+
+    public Connector(Scene source, Scene target, boolean connected) {
+        this.source = source;
+        this.target = target;
+        this.connected = connected;
     }
 
     public Scene getSource() {
@@ -36,5 +43,13 @@ public class Connector {
 
     public Scene getTarget() {
         return target;
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }

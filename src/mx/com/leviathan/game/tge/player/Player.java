@@ -22,16 +22,11 @@ package mx.com.leviathan.game.tge.player;
 public class Player {
 
     private Inventory inventory = new Inventory();
-    private Registry registry = new Registry();
 
     public Player() {
     }
 
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public Registry getRegistry() {
-        return registry;
     }
 }

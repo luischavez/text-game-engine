@@ -22,6 +22,7 @@ import mx.com.leviathan.game.tge.io.receiver.SwingReceiver;
 import mx.com.leviathan.game.tge.io.sender.SwingSender;
 import mx.com.leviathan.game.tge.param.ParamHolder;
 import mx.com.leviathan.game.tge.player.Player;
+import mx.com.leviathan.game.tge.test.action.AvailableItemsAction;
 import mx.com.leviathan.game.tge.test.action.DropAction;
 import mx.com.leviathan.game.tge.test.action.ExampleAction;
 import mx.com.leviathan.game.tge.test.action.ExitAction;
@@ -92,6 +93,7 @@ public class Test {
         });
         
         world.addAction(new ExampleAction());
+        world.addAction(new AvailableItemsAction());
         world.addAction(new PickAction());
         world.addAction(new HelpAction());
         world.addAction(new GoBackAction());
@@ -107,7 +109,7 @@ public class Test {
         world.addScene(roomScene);
         world.addScene(cleanRoomScene);
         
-        world.addConnector(new Connector(roomScene, cleanRoomScene));
+        world.addConnector(new Connector(roomScene, cleanRoomScene, false));
         
         world.setCurrentScene("Cuarto");
     }

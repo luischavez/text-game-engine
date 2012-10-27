@@ -24,11 +24,15 @@ import mx.com.leviathan.game.tge.world.scene.Scene;
  * @author Leviathan
  */
 public class CleanRoomScene extends Scene {
-    
+
     public CleanRoomScene() {
         setName("Cuarto de limpiesa");
     }
-    
+
+    @Override
+    public void onScene(World world) {
+    }
+
     @Override
     public void doAction(World world, String verb, ParamHolder holder) {
     }

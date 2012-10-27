@@ -27,7 +27,7 @@ import mx.com.leviathan.game.tge.world.World;
  *
  * @author Leviathan
  */
-@PatternAction(verb = "TOMAR", param = {"item_name"}, regex = {"^[\\w]+$"})
+@PatternAction(verb = "TOMAR", param = {"item_name"}, regex = {"^[\\w\\s]+$"})
 public class PickAction implements Action {
 
     @Override
@@ -35,7 +35,7 @@ public class PickAction implements Action {
         Iterator<Item> iterator = world.getCurrentScene().getItems().iterator();
         while (iterator.hasNext()) {
             Item item = iterator.next();
-            if (item.getName().equals(holder.get("item_name"))) {
+            if (item.getName().equalsIgnoreCase(holder.get("item_name", String.class))) {
                 Context.getInstance().getPlayer().getInventory().addItem(item);
                 iterator.remove();
                 Context.getInstance().getSender().send("Tomaste el item " + holder.get("item_name") + "\n");

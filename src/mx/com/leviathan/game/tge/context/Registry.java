@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package mx.com.leviathan.game.tge.player;
+package mx.com.leviathan.game.tge.context;
 
+import java.util.HashMap;
+import java.util.Map;
 import mx.com.leviathan.game.tge.param.ParamHolder;
 
 /**
@@ -24,6 +26,9 @@ import mx.com.leviathan.game.tge.param.ParamHolder;
 public class Registry {
 
     private ParamHolder holder = new ParamHolder();
+
+    private Registry() {
+    }
 
     public void setFlag(String key, boolean status) {
         holder.add(key, status);
@@ -35,5 +40,30 @@ public class Registry {
 
     public ParamHolder getHolder() {
         return holder;
+    }
+
+    public static Registry getInstance(Object object) {
+        if (RegistryHolder.contains(object)) {
+            return RegistryHolder.get(object);
+        }
+        return RegistryHolder.newInstance(object);
+    }
+
+    private static class RegistryHolder {
+
+        private static final Map<Object, Registry> registrys = new HashMap<Object, Registry>();
+
+        private static Registry newInstance(Object object) {
+            registrys.put(object, new Registry());
+            return get(object);
+        }
+
+        private static Registry get(Object object) {
+            return registrys.get(object);
+        }
+
+        private static boolean contains(Object object) {
+            return registrys.containsKey(object);
+        }
     }
 }

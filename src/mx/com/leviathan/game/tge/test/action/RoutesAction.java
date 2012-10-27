@@ -35,7 +35,7 @@ public class RoutesAction implements Action {
         List<Connector> connectors = world.getConnectors();
         for (Connector connector : connectors) {
             if (connector.getSource().equals(world.getCurrentScene())) {
-                Context.getInstance().getSender().send(connector.getTarget().getName().replaceAll(" ", "_") + "\n");
+                Context.getInstance().getSender().send("- " + connector.getTarget().getName() + " (" + (connector.isConnected() ? "Abierto" : "Cerrado") + ")\n");
             }
         }
         return true;
